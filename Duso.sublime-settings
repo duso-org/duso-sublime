@@ -1,0 +1,40 @@
+{
+  "extensions": ["du"],
+
+  // Indentation
+  "tab_size": 2,
+  "translate_tabs_to_spaces": true,
+
+  // Comments
+  "comment_start": "// ",
+  "comment_end": "",
+  "block_comment_start": "/*",
+  "block_comment_end": "*/",
+
+  // Bracket matching
+  "bracket_pairs": [
+    ["(", ")"],
+    ["[", "]"],
+    ["{", "}"]
+  ],
+
+  // Indentation increase/decrease
+  "indent_increase_pattern": "\\b(if|then|else|while|do|for|function|try)\\b|[{\\[]\\s*$",
+  "indent_decrease_pattern": "\\b(end|elseif|else|catch)\\b|[}\\]\\s*$",
+
+  // LSP Configuration
+  "lsp_format_on_save": true,
+  "lsp_servers": {
+    "duso": {
+      "enabled": true,
+      "command": ["duso", "-lsp"],
+      "languages": {
+        "duso": {
+          "languageId": "duso",
+          "scopes": ["source.duso"],
+          "syntaxes": ["Packages/Duso/Duso.sublime-syntax"]
+        }
+      }
+    }
+  }
+}

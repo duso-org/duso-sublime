@@ -1,0 +1,157 @@
+%YAML 1.2
+---
+name: Duso
+scope: source.duso
+file_extensions:
+  - du
+
+contexts:
+  main:
+    - include: comments
+    - include: multiline-strings
+    - include: strings
+    - include: keywords
+    - include: builtins
+    - include: structures
+    - include: functions
+    - include: constants
+    - include: numbers
+    - include: operators
+    - include: punctuation
+
+  comments:
+    - match: '//.*?$'
+      scope: comment.line.duso
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.duso
+      push: comment-block
+
+  comment-block:
+    - match: '\*/'
+      scope: punctuation.definition.comment.end.duso
+      pop: true
+    - match: '/\*'
+      scope: punctuation.definition.comment.begin.duso
+      push: comment-block
+    - match: .
+      scope: comment.block.duso
+
+  strings:
+    - match: '~[^~]*~'
+      scope: string.regexp.duso
+    - match: '"'
+      scope: punctuation.definition.string.begin.duso
+      push: string-double
+    - match: "'"
+      scope: punctuation.definition.string.begin.duso
+      push: string-single
+
+  string-double:
+    - match: '"'
+      scope: punctuation.definition.string.end.duso
+      pop: true
+    - match: |-
+        \\([\\\"'ntr{}])
+      scope: constant.character.escape.duso
+    - include: template-expression
+    - match: .
+      scope: string.quoted.double.duso
+
+  string-single:
+    - match: "'"
+      scope: punctuation.definition.string.end.duso
+      pop: true
+    - match: |-
+        \\([\\\"'ntr{}])
+      scope: constant.character.escape.duso
+    - include: template-expression
+    - match: .
+      scope: string.quoted.single.duso
+
+  multiline-strings:
+    - match: '"""'
+      scope: punctuation.bracket.multiline.begin.duso
+      push: multiline-string-double
+    - match: "'''"
+      scope: punctuation.bracket.multiline.begin.duso
+      push: multiline-string-single
+
+  multiline-string-double:
+    - match: '"""'
+      scope: punctuation.bracket.multiline.end.duso
+      pop: true
+    - include: template-expression
+    - match: .
+      scope: string.quoted.double.duso
+
+  multiline-string-single:
+    - match: "'''"
+      scope: punctuation.bracket.multiline.end.duso
+      pop: true
+    - include: template-expression
+    - match: .
+      scope: string.quoted.single.duso
+
+  template-expression:
+    - match: '\{\{'
+      scope: punctuation.definition.template.begin.duso
+      push: template-expr-content
+
+  template-expr-content:
+    - match: '\}\}'
+      scope: punctuation.definition.template.end.duso
+      pop: true
+    - include: builtins
+    - include: operators
+    - include: numbers
+    - include: constants
+    - include: identifiers
+    - include: punctuation
+
+  keywords:
+    - match: '\b(if|then|elseif|else|end|while|do|for|in|function|return|break|continue|try|catch|var|raw)\b'
+      scope: keyword.control.duso
+    - match: '\b(and|or|not)\b'
+      scope: keyword.operator.duso
+
+  builtins:
+    - match: '\b(abs|acos|asin|atan|atan2|append_file|breakpoint|busy|ceil|clamp|contains|context|copy_file|cos|current_dir|datastore|decode_base64|deep_copy|doc|encode_base64|ends_with|env|exit|exp|fetch|file_exists|file_type|filter|find|floor|format_json|format_time|hash|hash_password|http_server|include|input|join|keys|kill|len|list_dir|list_files|load|log|ln|lower|make_dir|map|markdown_ansi|markdown_html|max|min|move_file|now|parallel|parse|parse_json|parse_time|pi|pop|pow|print|push|random|range|reduce|remove_dir|remove_file|rename_file|replace|repeat|require|round|run|save|shift|sin|sleep|sort|spawn|split|sqrt|starts_with|substr|sys|tan|template|throw|tobool|tonumber|tostring|trim|type|unshift|upper|uuid|values|verify_password|watch|write)\b'
+      scope: support.function.duso
+
+  structures:
+    - match: '\b([A-Z][A-Za-z0-9_]*)\s*(?=\()'
+      scope: entity.name.function.duso
+
+  functions:
+    - match: '\b(function)\s+([a-z_][a-z0-9_]*)\b'
+      captures:
+        1: keyword.control.duso
+        2: entity.name.function.duso
+
+  constants:
+    - match: '\b(true|false|nil)\b'
+      scope: constant.language.duso
+
+  numbers:
+    - match: '\b([0-9]+(\.[0-9]+)?)\b'
+      scope: constant.numeric.duso
+
+  operators:
+    - match: '(==|!=|<=|>=|<|>)'
+      scope: keyword.operator.comparison.duso
+    - match: '(\+=|-=|\*=|/=|%=|=)'
+      scope: keyword.operator.assignment.duso
+    - match: '(\+|-|\*|/|%)'
+      scope: keyword.operator.arithmetic.duso
+    - match: '(\+\+|--)'
+      scope: keyword.operator.postfix.duso
+    - match: '[?:]'
+      scope: keyword.operator.ternary.duso
+
+  punctuation:
+    - match: '[{}\[\]().,;]'
+      scope: punctuation.duso
+
+  identifiers:
+    - match: '\b[a-z_][a-z0-9_]*\b'
+      scope: variable.other.duso
