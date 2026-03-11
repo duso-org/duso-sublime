@@ -1,0 +1,13 @@
+{
+  "clients": {
+    "duso": {
+      "enabled": true,
+      "command": ["duso", "-lsp"],
+      "languages": [{
+        "languageId": "duso",
+        "scopes": ["source.duso"],
+        "syntaxes": ["Packages/Duso/Duso.sublime-syntax"]
+      }]
+    }
+  }
+}
