@@ -1,0 +1,15 @@
+Duso 1.6.21 Support
+===================
+
+Updated Sublime Text plugin for Duso 1.6.21
+
+WHAT'S NEW:
+- Added syntax highlighting for new builtin functions
+- Support for: decrypt, encrypt, fibonacci, hmac, send_websocket, toregex,
+  verify_ed25519, websocket
+
+REQUIREMENTS:
+- Duso 1.6.21 or later must be installed
+- LSP package for Sublime Text
+
+For Duso release notes, visit: https://duso.rocks

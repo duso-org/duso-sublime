@@ -1,0 +1,17 @@
+Duso Sublime Text Plugin Installed!
+====================================
+
+Language Server Protocol (LSP) support for Duso in Sublime Text.
+
+REQUIREMENTS:
+- Duso binary must be installed and in your PATH
+- LSP package must be installed from Package Control
+
+FEATURES:
+- Syntax Highlighting for Duso (.du) files
+- Real-time Error Diagnostics
+- Hover Documentation
+- Go to Definition
+- Find References
+
+For more info, visit: https://duso.rocks
